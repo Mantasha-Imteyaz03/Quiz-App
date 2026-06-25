@@ -45,3 +45,37 @@ const questions = [
     ]
   }
 ]
+
+let questionElement = document.getElementById('question');
+let answersElement = document.getElementById('answer-buttons');
+let nextBtn = document.getElementById('next-btn');
+
+
+let currQuestionIdx = 0;
+let score = 0;
+
+function startQuiz(){
+ currQuestionIdx = 0;
+ score = 0;
+//  nextBtn.innerHTML = 'Next';
+ showQuestion();
+}
+
+function showQuestion(){
+  resetState()
+  let currQuestion = questions[currQuestionIdx];
+  let questionNo = currQuestionIdx + 1;
+  questionElement.innerHTML = questionNo + '. ' + currQuestion.question
+
+  let ascii = ['a','b','c','d'];
+
+  currQuestion.answers.forEach((answer,idx)=>{
+  const button = document.createElement('button');
+  button.innerHTML = ascii[idx]+ '. ' +  answer.text;
+  button.classList.add('btn')
+  answersElement.appendChild(button)
+  })
+}
+
+
+startQuiz()
