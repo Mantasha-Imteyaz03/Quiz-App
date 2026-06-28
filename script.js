@@ -48,7 +48,8 @@ const questions = [
 
 let questionElement = document.getElementById('question');
 let answersElement = document.getElementById('answer-buttons');
-let nextBtn = document.getElementById('next-btn');
+let nextBtn = document.getElementsByClassName('next-btn');
+
 
 
 let currQuestionIdx = 0;
@@ -57,12 +58,12 @@ let score = 0;
 function startQuiz(){
  currQuestionIdx = 0;
  score = 0;
-//  nextBtn.innerHTML = 'Next';
+ nextBtn.innerHTML = 'Next';
  showQuestion();
 }
 
 function showQuestion(){
-  resetState()
+  // resetState()
   let currQuestion = questions[currQuestionIdx];
   let questionNo = currQuestionIdx + 1;
   questionElement.innerHTML = questionNo + '. ' + currQuestion.question
@@ -72,10 +73,34 @@ function showQuestion(){
   currQuestion.answers.forEach((answer,idx)=>{
   const button = document.createElement('button');
   button.innerHTML = ascii[idx]+ '. ' +  answer.text;
+  // button.dataset.correct = answer.correct;
   button.classList.add('btn')
   answersElement.appendChild(button)
+
+  button.addEventListener('click', ()=>{
+
+
+    if(answer.correct == true){
+      button.style.backgroundColor = "green"
+      button.style.fontWeight = 700;
+      button.style.color = "white"
+      }else{
+      button.style.backgroundColor = "red"
+      button.style.fontWeight = 700;
+      button.style.color = "white"
+  }
+
+for(let i=0; i<answersElement.children.length; i++){
+console.log(answersElement.children[i])
+console.log(currQuestion.answers[i].correct)
+if (currQuestion.answers[i].correct) {
+   answersElement.children[0].style.backgroundColor = 'green'
+}
+  }
+      })
   })
 }
 
 
 startQuiz()
+// console.log(answersElement.children)
