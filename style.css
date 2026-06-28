@@ -46,6 +46,7 @@ body{
 .btn:hover{
   background: #00122e;
   color: #fff;
+  font-weight: 700;
 }
 .next-btn{
   width: 150px;
