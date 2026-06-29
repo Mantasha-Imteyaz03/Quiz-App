@@ -1,5 +1,14 @@
 const questions = [
   {
+    question : "What global crisis does John Doerr outline an action plan to solve in his 2021 book Speed & Scale?",
+    answers :[
+      { text : 'Cyberwarfare' , correct : false},
+      { text : 'Pandemics' , correct : false},
+      { text : 'Climate' , correct : true},
+      { text : 'Inflation' , correct : false},
+    ]
+  },
+  {
     question : "Who is the founder of Tesla car?",
     answers :[
       { text : 'Elon Musk' , correct : true},
@@ -35,20 +44,12 @@ const questions = [
       { text : 'Bing' , correct : false},
     ]
   },
-  {
-    question : "What global crisis does John Doerr outline an action plan to solve in his 2021 book Speed & Scale?",
-    answers :[
-      { text : 'Cyberwarfare' , correct : false},
-      { text : 'Pandemics' , correct : false},
-      { text : 'Climate' , correct : true},
-      { text : 'Inflation' , correct : false},
-    ]
-  }
+  
 ]
 
 let questionElement = document.getElementById('question');
 let answersElement = document.getElementById('answer-buttons');
-let nextBtn = document.getElementsByClassName('next-btn');
+let nextBtn = document.querySelector('.next-btn');
 
 
 
@@ -84,6 +85,7 @@ function showQuestion(){
       button.style.backgroundColor = "green"
       button.style.fontWeight = 700;
       button.style.color = "white"
+      score++
       }else{
       button.style.backgroundColor = "red"
       button.style.fontWeight = 700;
@@ -91,14 +93,37 @@ function showQuestion(){
   }
 
 for(let i=0; i<answersElement.children.length; i++){
-console.log(answersElement.children[i])
-console.log(currQuestion.answers[i].correct)
+// console.log(answersElement.children[i])
+// console.log(currQuestion.answers[i].correct)
 if (currQuestion.answers[i].correct) {
-   answersElement.children[0].style.backgroundColor = 'green'
+   answersElement.children[i].style.backgroundColor = 'green'
+   answersElement.children[i].style.fontWeight = 700;
+   answersElement.children[i].style.color = "white" 
+  
 }
-  }
-      })
+ answersElement.children[i].disabled = true
+   }
+    nextBtn.style.display = 'block';
+     })
+    
   })
+}
+
+nextBtn.addEventListener('click', ()=>{
+  currQuestionIdx++
+  if(currQuestionIdx < questions.length){
+    answersElement.innerHTML = ''
+  showQuestion()
+   }else{
+    finalScore()
+   }
+  
+  
+})
+function finalScore(){
+  console.log('print');
+  
+  nextBtn.innerHTML = 'Restart'
 }
 
 
