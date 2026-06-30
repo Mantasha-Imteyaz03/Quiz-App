@@ -44,7 +44,7 @@ const questions = [
       { text : 'Bing' , correct : false},
     ]
   },
-  
+    
 ]
 
 let questionElement = document.getElementById('question');
@@ -60,11 +60,12 @@ function startQuiz(){
  currQuestionIdx = 0;
  score = 0;
  nextBtn.innerHTML = 'Next';
+ nextBtn.style.display = "none";
+ answersElement.innerHTML = "";
  showQuestion();
 }
 
 function showQuestion(){
-  // resetState()
   let currQuestion = questions[currQuestionIdx];
   let questionNo = currQuestionIdx + 1;
   questionElement.innerHTML = questionNo + '. ' + currQuestion.question
@@ -74,7 +75,6 @@ function showQuestion(){
   currQuestion.answers.forEach((answer,idx)=>{
   const button = document.createElement('button');
   button.innerHTML = ascii[idx]+ '. ' +  answer.text;
-  // button.dataset.correct = answer.correct;
   button.classList.add('btn')
   answersElement.appendChild(button)
 
@@ -82,19 +82,17 @@ function showQuestion(){
 
 
     if(answer.correct == true){
+      score++
       button.style.backgroundColor = "green"
       button.style.fontWeight = 700;
       button.style.color = "white"
-      score++
-      }else{
+    }else{
       button.style.backgroundColor = "red"
       button.style.fontWeight = 700;
       button.style.color = "white"
   }
 
 for(let i=0; i<answersElement.children.length; i++){
-// console.log(answersElement.children[i])
-// console.log(currQuestion.answers[i].correct)
 if (currQuestion.answers[i].correct) {
    answersElement.children[i].style.backgroundColor = 'green'
    answersElement.children[i].style.fontWeight = 700;
@@ -110,22 +108,33 @@ if (currQuestion.answers[i].correct) {
 }
 
 nextBtn.addEventListener('click', ()=>{
-  currQuestionIdx++
   if(currQuestionIdx < questions.length){
-    answersElement.innerHTML = ''
+    answersElement.innerHTML = '';
+    nextBtn.style.display = "none";
   showQuestion()
-   }else{
+   }else if (nextBtn.innerHTML === "Restart") {
+
+        startQuiz();
+
+    }else{
+     
     finalScore()
-   }
-  
-  
+
+  }
+       currQuestionIdx++
+
 })
-function finalScore(){
-  console.log('print');
-  
-  nextBtn.innerHTML = 'Restart'
+
+
+  function finalScore() {
+    answersElement.innerHTML = "";
+
+    questionElement.innerHTML = `🎉 Your score is ${score} out of ${questions.length}`;
+
+    nextBtn.innerHTML = "Restart";
+    nextBtn.style.display = "block";
 }
 
 
+
 startQuiz()
-// console.log(answersElement.children)
